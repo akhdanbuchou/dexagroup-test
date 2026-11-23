@@ -80,7 +80,7 @@ Open http://localhost:3000.
 | Role     | Username                     | Password      |
 | -------- | ---------------------------- | ------------- |
 | HR Admin | `admin`                      | `admin123`    |
-| Employee | `giorno`, `diego` or `funny` | `password123` |
+| Employee | `giorno`, `diego` or `johnny` | `password123` |
 
 ---
 
