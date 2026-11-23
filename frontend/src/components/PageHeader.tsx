@@ -1,17 +1,13 @@
 "use client";
 
 import { Flex, Typography } from "antd";
-import type { ReactNode } from "react";
+import type { TPageHeaderProps } from "@/types/layout";
 
 export function PageHeader({
   title,
   description,
   extra,
-}: {
-  title: string;
-  description?: string;
-  extra?: ReactNode;
-}) {
+}: TPageHeaderProps) {
   return (
     <Flex
       justify="space-between"
