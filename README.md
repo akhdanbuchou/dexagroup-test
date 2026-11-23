@@ -77,9 +77,9 @@ Open http://localhost:3000.
 
 ## Demo accounts
 
-| Role     | Username                     | Password      |
-| -------- | ---------------------------- | ------------- |
-| HR Admin | `admin`                      | `admin123`    |
+| Role     | Username                      | Password      |
+| -------- | ----------------------------- | ------------- |
+| HR Admin | `admin`                       | `admin123`    |
 | Employee | `giorno`, `diego` or `johnny` | `password123` |
 
 ---
