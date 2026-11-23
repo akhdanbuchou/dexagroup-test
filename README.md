@@ -23,7 +23,8 @@ cd dexagroup-test
 docker compose up --build
 ```
 
-Open http://localhost:3000 once all three containers are up.
+Open http://localhost:3000 once all three containers are up. The backend container applies
+database migrations and seeds the demo accounts automatically on startup.
 
 To stop: `Ctrl+C`, then `docker compose down`.
 To also delete the database data: `docker compose down -v`.
@@ -34,7 +35,7 @@ To also delete the database data: `docker compose down -v`.
 
 ## Option 2: Run manually
 
-**Requirements:** Node.js 20+ and npm, plus a PostgreSQL database.
+**Requirements:** Node.js 20.19+ (22 or 24 recommended) and npm, plus a PostgreSQL database.
 
 ### 1. Start PostgreSQL
 
@@ -50,8 +51,10 @@ or use your own local PostgreSQL and create a database named `wfh_attendance`.
 
 ```bash
 cd backend
-cp .env.example .env    # edit DATABASE_URL if your PostgreSQL credentials differ
-npm install
+cp .env.example .env    
+npm install             
+npm run db:migrate      
+npm run db:seed         
 npm run start:dev
 ```
 
@@ -72,21 +75,12 @@ Open http://localhost:3000.
 
 ---
 
-## Environment variables
+## Demo accounts
 
-**backend/.env**
-
-| Variable       | Default                                                       | Description                |
-| -------------- | ------------------------------------------------------------- | -------------------------- |
-| `PORT`         | `4000`                                                        | API port                   |
-| `FRONTEND_URL` | `http://localhost:3000`                                       | Allowed CORS origin        |
-| `DATABASE_URL` | `postgresql://postgres:postgres@localhost:5432/wfh_attendance` | PostgreSQL connection URL  |
-
-**frontend/.env.local**
-
-| Variable              | Default                 | Description      |
-| --------------------- | ----------------------- | ---------------- |
-| `NEXT_PUBLIC_API_URL` | `http://localhost:4000` | Backend API URL  |
+| Role     | Username                     | Password      |
+| -------- | ---------------------------- | ------------- |
+| HR Admin | `admin`                      | `admin123`    |
+| Employee | `giorno`, `diego` or `funny` | `password123` |
 
 ---
 

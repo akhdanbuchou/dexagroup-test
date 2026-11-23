@@ -1,0 +1,60 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  HR_ADMIN
+  EMPLOYEE
+}
+
+enum AttendanceType {
+  CLOCK_IN
+  CLOCK_OUT
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  username     String    @unique
+  passwordHash String    @map("password_hash")
+  role         Role
+  employeeId   Int?      @unique @map("employee_id")
+  employee     Employee? @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Employee {
+  id          Int          @id @default(autoincrement())
+  name        String
+  dateOfBirth DateTime     @map("date_of_birth") @db.Date
+  position    String
+  user        User?
+  attendances Attendance[]
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  @@map("employees")
+}
+
+model Attendance {
+  id            Int            @id @default(autoincrement())
+  employeeId    Int            @map("employee_id")
+  employee      Employee       @relation(fields: [employeeId], references: [id], onDelete: Restrict)
+  type          AttendanceType
+  recordedAt    DateTime       @map("recorded_at")
+  photo         Bytes
+  photoMimeType String         @map("photo_mime_type")
+  createdAt     DateTime       @default(now()) @map("created_at")
+
+  @@index([employeeId, recordedAt])
+  @@map("attendances")
+}
