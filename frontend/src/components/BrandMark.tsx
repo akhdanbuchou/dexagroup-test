@@ -2,9 +2,10 @@
 
 import { LaptopOutlined } from "@ant-design/icons";
 import { Flex, Typography } from "antd";
-import { BRAND } from "@/lib/theme";
+import { BRAND } from "@/utils/theme";
+import type { TBrandMarkProps } from "@/types/layout";
 
-export function BrandMark({ size = "default" }: { size?: "default" | "large" }) {
+export function BrandMark({ size = "default" }: TBrandMarkProps) {
   const large = size === "large";
   return (
     <Flex align="center" gap={large ? 12 : 10}>

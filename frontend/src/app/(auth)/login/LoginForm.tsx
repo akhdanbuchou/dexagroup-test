@@ -3,17 +3,18 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Form, Input } from "antd";
 import { startTransition, useActionState } from "react";
-import { login, type LoginInput } from "@/actions/auth";
+import { login } from "@/actions/auth";
+import type { TLoginInput } from "@/types/auth";
 
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(login, {});
 
-  const onFinish = (values: LoginInput) => {
+  const onFinish = (values: TLoginInput) => {
     startTransition(() => formAction(values));
   };
 
   return (
-    <Form<LoginInput>
+    <Form<TLoginInput>
       layout="vertical"
       size="large"
       requiredMark={false}
