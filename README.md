@@ -12,6 +12,7 @@ A web app for recording employees' work-from-home attendance.
 | Database | PostgreSQL 17                 | —                        | localhost:5432        |
 
 ---
+## How To Run
 
 ## Option 1: Run with Docker (recommended)
 
