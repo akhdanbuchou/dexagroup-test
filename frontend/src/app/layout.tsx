@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
-import { ConfigProvider } from "antd";
+import { App, ConfigProvider } from "antd";
+import { theme } from "@/utils/theme";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,10 +28,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <AntdRegistry>
-          <ConfigProvider
-            theme={{ token: { fontFamily: "var(--font-geist-sans), sans-serif" } }}
-          >
-            {children}
+          <ConfigProvider theme={theme}>
+            <App className="flex flex-1 flex-col">{children}</App>
           </ConfigProvider>
         </AntdRegistry>
       </body>

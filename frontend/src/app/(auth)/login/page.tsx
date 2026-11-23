@@ -2,7 +2,7 @@
 
 import { Card, Flex, Typography } from "antd";
 import { BrandMark } from "@/components/BrandMark";
-import { BRAND } from "@/lib/theme";
+import { BRAND } from "@/utils/theme";
 import { LoginForm } from "./LoginForm";
 
 export default function LoginPage() {
