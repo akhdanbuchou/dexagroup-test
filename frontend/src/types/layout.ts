@@ -22,4 +22,19 @@ type TBrandMarkProps = {
   size?: "default" | "large";
 };
 
-export type { TNavItem, TAppShellProps, TPageHeaderProps, TBrandMarkProps };
+type TQueryProviderProps = {
+  children: ReactNode;
+};
+type TQueryErrorAlertProps = {
+  error: unknown;
+  onRetry: () => void;
+};
+
+export type {
+  TNavItem,
+  TAppShellProps,
+  TPageHeaderProps,
+  TBrandMarkProps,
+  TQueryProviderProps,
+  TQueryErrorAlertProps,
+};
