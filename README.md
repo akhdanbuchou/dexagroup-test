@@ -12,7 +12,17 @@ A web app for recording employees' work-from-home attendance.
 | Database | PostgreSQL 17                 | —                        | localhost:5432        |
 
 ---
-## How To Run
+
+## Demo accounts
+
+| Role     | Username                      | Password      |
+| -------- | ----------------------------- | ------------- |
+| HR Admin | `admin`                       | `admin123`    |
+| Employee | `giorno`, `diego` or `johnny` | `password123` |
+
+---
+
+# How To Run
 
 ## Option 1: Run with Docker (recommended)
 
@@ -73,15 +83,6 @@ npm run dev
 ```
 
 Open http://localhost:3000.
-
----
-
-## Demo accounts
-
-| Role     | Username                      | Password      |
-| -------- | ----------------------------- | ------------- |
-| HR Admin | `admin`                       | `admin123`    |
-| Employee | `giorno`, `diego` or `johnny` | `password123` |
 
 ---
 
