@@ -6,11 +6,8 @@ import {
   fetchEmployees,
   updateEmployee,
 } from "../client";
-import type {
-  TAttendanceListParams,
-  TEmployeeListParams,
-  TUpdateEmployeeVariables,
-} from "../types";
+import type { TAttendanceListParams } from "@/types/attendance";
+import type { TEmployeeListParams, TUpdateEmployeeVariables } from "../types";
 
 const employeeKeys = {
   all: ["employees"] as const,

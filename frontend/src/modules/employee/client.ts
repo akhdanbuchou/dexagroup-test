@@ -1,13 +1,12 @@
+import type { TAttendanceList, TAttendanceListParams } from "@/types/attendance";
 import type {
-  TAttendanceList,
-  TAttendanceListParams,
   TCreateEmployeeInput,
   TEmployeeDetail,
   TEmployeeList,
   TEmployeeListParams,
   TUpdateEmployeeInput,
 } from "./types";
-import { endOfDayIso, startOfDayIso } from "@/utils/date";
+import { attendanceQueryString } from "@/utils/attendance";
 import { http } from "@/utils/http";
 import { toQueryString } from "@/utils/query-string";
 
@@ -23,13 +22,7 @@ function fetchEmployeeAttendances(
   id: number,
   params: TAttendanceListParams,
 ): Promise<TAttendanceList> {
-  const query = toQueryString({
-    from: params.from ? startOfDayIso(params.from) : null,
-    to: params.to ? endOfDayIso(params.to) : null,
-    page: params.page,
-    pageSize: params.pageSize,
-  });
-  return http<TAttendanceList>(`/employees/${id}/attendances${query}`);
+  return http<TAttendanceList>(`/employees/${id}/attendances${attendanceQueryString(params)}`);
 }
 
 function createEmployee(input: TCreateEmployeeInput): Promise<TEmployeeDetail> {

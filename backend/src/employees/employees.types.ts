@@ -1,5 +1,3 @@
-import type { AttendanceType } from '../generated/prisma/enums.js';
-
 type TEmployeeSummary = {
   id: number;
   name: string;
@@ -15,20 +13,4 @@ type TEmployeeDetail = TEmployeeSummary & {
   updatedAt: string;
 };
 
-type TAttendanceSummary = {
-  id: number;
-  type: AttendanceType;
-  recordedAt: string;
-};
-
-type TAttendancePhoto = {
-  photo: Uint8Array;
-  mimeType: string;
-};
-
-export type {
-  TEmployeeSummary,
-  TEmployeeDetail,
-  TAttendanceSummary,
-  TAttendancePhoto,
-};
+export type { TEmployeeSummary, TEmployeeDetail };

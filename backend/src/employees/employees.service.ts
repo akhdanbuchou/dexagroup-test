@@ -10,15 +10,9 @@ import { PrismaService } from '../prisma/prisma.service.js';
 import { calculateAge, toDateOnly } from '../common/date.util.js';
 import type { TPaginated } from '../common/pagination.types.js';
 import { CreateEmployeeDto } from './dto/create-employee.dto.js';
-import { ListAttendancesQueryDto } from './dto/list-attendances-query.dto.js';
 import { ListEmployeesQueryDto } from './dto/list-employees-query.dto.js';
 import { UpdateEmployeeDto } from './dto/update-employee.dto.js';
-import type {
-  TAttendancePhoto,
-  TAttendanceSummary,
-  TEmployeeDetail,
-  TEmployeeSummary,
-} from './employees.types.js';
+import type { TEmployeeDetail, TEmployeeSummary } from './employees.types.js';
 
 const employeeWithUsername = {
   include: { user: { select: { username: true } } },
@@ -132,58 +126,7 @@ export class EmployeesService {
     return this.findOne(id);
   }
 
-  async listAttendances(
-    employeeId: number,
-    query: ListAttendancesQueryDto,
-  ): Promise<TPaginated<TAttendanceSummary>> {
-    await this.ensureExists(employeeId);
-
-    const where: Prisma.AttendanceWhereInput = {
-      employeeId,
-      recordedAt: {
-        ...(query.from ? { gte: new Date(query.from) } : {}),
-        ...(query.to ? { lte: new Date(query.to) } : {}),
-      },
-    };
-
-    const [total, rows] = await this.prisma.$transaction([
-      this.prisma.attendance.count({ where }),
-      this.prisma.attendance.findMany({
-        where,
-        select: { id: true, type: true, recordedAt: true },
-        orderBy: [{ recordedAt: 'desc' }, { id: 'desc' }],
-        skip: (query.page - 1) * query.pageSize,
-        take: query.pageSize,
-      }),
-    ]);
-
-    return {
-      data: rows.map((row) => ({
-        id: row.id,
-        type: row.type,
-        recordedAt: row.recordedAt.toISOString(),
-      })),
-      total,
-      page: query.page,
-      pageSize: query.pageSize,
-    };
-  }
-
-  async getAttendancePhoto(
-    employeeId: number,
-    attendanceId: number,
-  ): Promise<TAttendancePhoto> {
-    const row = await this.prisma.attendance.findFirst({
-      where: { id: attendanceId, employeeId },
-      select: { photo: true, photoMimeType: true },
-    });
-    if (!row) {
-      throw new NotFoundException(`Attendance ${attendanceId} not found`);
-    }
-    return { photo: row.photo, mimeType: row.photoMimeType };
-  }
-
-  private async ensureExists(id: number): Promise<void> {
+  async assertExists(id: number): Promise<void> {
     const exists = await this.prisma.employee.count({ where: { id } });
     if (!exists) {
       throw new NotFoundException(`Employee ${id} not found`);

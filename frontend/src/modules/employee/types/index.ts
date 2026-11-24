@@ -1,6 +1,5 @@
 import type { Dayjs } from "dayjs";
 import type { TPaginated } from "@/types/api";
-import type { TAttendanceRecord } from "@/types/attendance";
 
 type TEmployee = {
   id: number;
@@ -59,21 +58,8 @@ type TEmployeeListQuery = {
   page?: number;
 };
 
-type TAttendanceFilterQuery = {
-  from?: string | null;
-  to?: string | null;
-  page?: number;
-};
-
 type TEmployeeListParams = {
   search: string;
-  page: number;
-  pageSize: number;
-};
-
-type TAttendanceListParams = {
-  from: string | null;
-  to: string | null;
   page: number;
   pageSize: number;
 };
@@ -84,8 +70,6 @@ type TUpdateEmployeeVariables = {
 };
 
 type TEmployeeList = TPaginated<TEmployee>;
-
-type TAttendanceList = TPaginated<TAttendanceRecord>;
 
 type TEmployeeDetailViewProps = {
   employeeId: number;
@@ -101,11 +85,8 @@ export type {
   TEmployeeModalState,
   TEmployeeFormModalProps,
   TEmployeeListQuery,
-  TAttendanceFilterQuery,
   TEmployeeListParams,
-  TAttendanceListParams,
   TUpdateEmployeeVariables,
   TEmployeeList,
-  TAttendanceList,
   TEmployeeDetailViewProps,
 };

@@ -36,6 +36,10 @@ function isDateParam(value: string | null | undefined): value is string {
   );
 }
 
+function todayDateParam(): string {
+  return dayjs().tz(APP_TIMEZONE).format(DATE_PARAM_FORMAT);
+}
+
 function startOfDayIso(date: string): string {
   return dayjs.tz(date, APP_TIMEZONE).startOf("day").toISOString();
 }
@@ -52,6 +56,7 @@ export {
   formatTime,
   formatDateOnly,
   isDateParam,
+  todayDateParam,
   startOfDayIso,
   endOfDayIso,
 };
