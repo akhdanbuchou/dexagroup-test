@@ -54,6 +54,7 @@ export function AppShell({ user, children }: TAppShellProps) {
   const [loggingOut, startLogout] = useTransition();
 
   const items = NAV_ITEMS[user.role];
+  const hasNavigation = items.length > 1;
   const selectedKey =
     [...items]
       .sort((a, b) => b.key.length - a.key.length)
@@ -97,11 +98,12 @@ export function AppShell({ user, children }: TAppShellProps) {
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {isDesktop ? (
+      {hasNavigation && isDesktop && (
         <Layout.Sider width={248} style={{ borderInlineEnd: `1px solid ${BRAND.border}` }}>
           {navigation}
         </Layout.Sider>
-      ) : (
+      )}
+      {hasNavigation && !isDesktop && (
         <Drawer
           placement="left"
           open={drawerOpen}
@@ -118,18 +120,23 @@ export function AppShell({ user, children }: TAppShellProps) {
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: isDesktop ? "flex-end" : "space-between",
+            justifyContent: hasNavigation && isDesktop ? "flex-end" : "space-between",
             padding: "0 16px",
             borderBottom: `1px solid ${BRAND.border}`,
           }}
         >
-          {!isDesktop && (
+          {hasNavigation && !isDesktop && (
             <Button
               type="text"
               icon={<MenuOutlined />}
               aria-label="Open navigation"
               onClick={() => setDrawerOpen(true)}
             />
+          )}
+          {!hasNavigation && (
+            <Link href={items[0].key} aria-label="Go to home">
+              <BrandMark />
+            </Link>
           )}
           <Dropdown menu={{ items: userMenu }} trigger={["click"]} placement="bottomRight">
             <Button type="text" style={{ height: "auto", padding: "4px 8px" }}>
