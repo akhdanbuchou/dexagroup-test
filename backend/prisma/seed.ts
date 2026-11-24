@@ -8,9 +8,9 @@ const prisma = new PrismaClient({
 });
 
 const employees = [
-  { username: 'budi', name: 'Budi Santoso', dateOfBirth: '1992-04-15', position: 'Software Engineer' },
-  { username: 'siti', name: 'Siti Rahmawati', dateOfBirth: '1995-09-02', position: 'Product Designer' },
-  { username: 'andi', name: 'Andi Pratama', dateOfBirth: '1988-12-20', position: 'Finance Staff' },
+  { username: 'giorno', name: 'Giorno Giovanna', dateOfBirth: '1992-04-15', position: 'Software Engineer' },
+  { username: 'diego', name: 'Diego Brando', dateOfBirth: '1995-09-02', position: 'Product Designer' },
+  { username: 'johnny', name: 'Johnny Joestar', dateOfBirth: '1988-12-20', position: 'Finance Staff' },
 ];
 
 async function main() {
