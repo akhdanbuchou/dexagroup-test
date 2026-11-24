@@ -21,8 +21,7 @@ export default function LoginPage() {
           <Flex vertical gap={8}>
             <BrandMark size="large" />
             <Typography.Text type="secondary">
-              Sign in to clock in your work-from-home attendance or manage
-              employees.
+              Sign in to clock in your work-from-home attendance or manage employees.
             </Typography.Text>
           </Flex>
           <LoginForm />

@@ -4,7 +4,6 @@ import { Card, DatePicker, Empty, Table, type TableProps } from "antd";
 import { PageHeader } from "@/components/PageHeader";
 import type { TAttendanceRow } from "@/types/attendance";
 
-
 const columns: TableProps<TAttendanceRow>["columns"] = [
   { title: "Date", dataIndex: "date", key: "date" },
   { title: "Type", dataIndex: "type", key: "type" },

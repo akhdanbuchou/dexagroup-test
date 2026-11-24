@@ -8,10 +8,7 @@ import type { TLoginInput, TLoginState } from "@/types/auth";
 
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:4000";
 
-export async function login(
-  _prev: TLoginState,
-  input: TLoginInput,
-): Promise<TLoginState> {
+export async function login(_prev: TLoginState, input: TLoginInput): Promise<TLoginState> {
   let response: Response;
   try {
     response = await fetch(`${BACKEND_URL}/auth/login`, {
@@ -34,8 +31,7 @@ export async function login(
     return { error: "Something went wrong. Please try again." };
   }
 
-  const data: { accessToken: string; user: { role: unknown } } =
-    await response.json();
+  const data: { accessToken: string; user: { role: unknown } } = await response.json();
   if (!isRole(data.user.role)) {
     return { error: "Your account has an unsupported role." };
   }

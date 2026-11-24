@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  CameraOutlined,
-  LoginOutlined,
-  LogoutOutlined,
-} from "@ant-design/icons";
+import { CameraOutlined, LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Flex, Row, Tag, Timeline, Typography } from "antd";
 import dayjs from "dayjs";
 import { useNow } from "@/components/useNow";
@@ -28,8 +24,7 @@ export function ClockPanel({ name }: TClockPanelProps) {
           {now ? greeting(now.getHours()) : "Hello"}, {firstName}
         </Typography.Title>
         <Typography.Text type="secondary">
-          Record your clock-in when you start and your clock-out when you finish
-          working from home.
+          Record your clock-in when you start and your clock-out when you finish working from home.
         </Typography.Text>
       </div>
 

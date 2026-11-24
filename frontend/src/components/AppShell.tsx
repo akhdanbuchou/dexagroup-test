@@ -46,10 +46,7 @@ function initials(name: string): string {
     .join("");
 }
 
-export function AppShell({
-  user,
-  children,
-}: TAppShellProps) {
+export function AppShell({ user, children }: TAppShellProps) {
   const pathname = usePathname();
   const screens = Grid.useBreakpoint();
   const isDesktop = screens.lg ?? true;
@@ -60,8 +57,8 @@ export function AppShell({
   const selectedKey =
     [...items]
       .sort((a, b) => b.key.length - a.key.length)
-      .find((item) => pathname === item.key || pathname.startsWith(`${item.key}/`))
-      ?.key ?? items[0].key;
+      .find((item) => pathname === item.key || pathname.startsWith(`${item.key}/`))?.key ??
+    items[0].key;
 
   const menuItems: MenuProps["items"] = items.map((item) => ({
     key: item.key,
@@ -101,10 +98,7 @@ export function AppShell({
   return (
     <Layout style={{ minHeight: "100vh" }}>
       {isDesktop ? (
-        <Layout.Sider
-          width={248}
-          style={{ borderInlineEnd: `1px solid ${BRAND.border}` }}
-        >
+        <Layout.Sider width={248} style={{ borderInlineEnd: `1px solid ${BRAND.border}` }}>
           {navigation}
         </Layout.Sider>
       ) : (
@@ -140,9 +134,7 @@ export function AppShell({
           <Dropdown menu={{ items: userMenu }} trigger={["click"]} placement="bottomRight">
             <Button type="text" style={{ height: "auto", padding: "4px 8px" }}>
               <Flex align="center" gap={10}>
-                <Avatar style={{ background: BRAND.primary }}>
-                  {initials(user.name)}
-                </Avatar>
+                <Avatar style={{ background: BRAND.primary }}>{initials(user.name)}</Avatar>
                 <Flex vertical align="flex-start" style={{ lineHeight: 1.3 }}>
                   <Typography.Text strong>{user.name}</Typography.Text>
                   <Typography.Text type="secondary" style={{ fontSize: 12 }}>
