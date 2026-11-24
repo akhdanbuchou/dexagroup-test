@@ -1,4 +1,4 @@
-import { EmployeeNotFound } from "@/components/EmployeeNotFound";
+import { EmployeeNotFound } from "@/modules/employee";
 
 export default function AdminNotFound() {
   return <EmployeeNotFound />;

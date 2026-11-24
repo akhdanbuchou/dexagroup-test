@@ -3,8 +3,8 @@
 import { Alert, DatePicker, Form, Input, Modal } from "antd";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useCreateEmployee, useUpdateEmployee } from "@/hooks/employees";
-import type { TEmployeeFormModalProps, TEmployeeFormValues } from "@/types/employee";
+import { useCreateEmployee, useUpdateEmployee } from "../hooks";
+import type { TEmployeeFormModalProps, TEmployeeFormValues } from "../types";
 import { DATE_PARAM_FORMAT } from "@/utils/date";
 import { errorMessage, toFieldErrors } from "@/utils/http";
 

@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SESSION_COOKIE, SESSION_MAX_AGE_SECONDS } from "@/utils/jwt";
 import { isRole, ROLE_HOME } from "@/utils/roles";
-import type { TLoginInput, TLoginState } from "@/types/auth";
+import type { TLoginInput, TLoginState } from "./types";
 
 const BACKEND_URL = process.env.BACKEND_URL ?? "http://localhost:4000";
 

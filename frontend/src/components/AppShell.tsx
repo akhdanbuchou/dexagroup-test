@@ -22,7 +22,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useTransition } from "react";
-import { logout } from "@/actions/auth";
+import { logout } from "@/modules/auth";
 import { BrandMark } from "@/components/BrandMark";
 import { ROLE_LABEL } from "@/utils/roles";
 import { BRAND } from "@/utils/theme";

@@ -3,7 +3,7 @@
 import { Button, Flex, Result } from "antd";
 import Link from "next/link";
 import { useTransition } from "react";
-import { logout } from "@/actions/auth";
+import { logout } from "@/modules/auth";
 
 export default function Unauthorized() {
   const [pending, startTransition] = useTransition();

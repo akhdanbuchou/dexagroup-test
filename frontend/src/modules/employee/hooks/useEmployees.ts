@@ -5,12 +5,12 @@ import {
   fetchEmployeeAttendances,
   fetchEmployees,
   updateEmployee,
-} from "@/client/employees";
+} from "../client";
 import type {
   TAttendanceListParams,
   TEmployeeListParams,
   TUpdateEmployeeVariables,
-} from "@/types/employee";
+} from "../types";
 
 const employeeKeys = {
   all: ["employees"] as const,

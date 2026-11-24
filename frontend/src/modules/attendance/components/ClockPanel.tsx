@@ -3,8 +3,8 @@
 import { CameraOutlined, LoginOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Button, Card, Col, Flex, Row, Tag, Timeline, Typography } from "antd";
 import dayjs from "dayjs";
-import { useNow } from "@/components/useNow";
-import type { TClockPanelProps } from "@/types/attendance";
+import { useNow } from "../hooks";
+import type { TClockPanelProps } from "../types";
 import { BRAND } from "@/utils/theme";
 
 function greeting(hour: number): string {

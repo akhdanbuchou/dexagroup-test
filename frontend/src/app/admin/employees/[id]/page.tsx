@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { requireRole } from "@/utils/session";
-import { EmployeeDetailView } from "./EmployeeDetailView";
+import { EmployeeDetailView } from "@/modules/employee";
 
 export default async function EmployeeDetailPage({ params }: PageProps<"/admin/employees/[id]">) {
   await requireRole("HR_ADMIN");

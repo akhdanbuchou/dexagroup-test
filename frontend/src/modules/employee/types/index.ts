@@ -1,6 +1,6 @@
 import type { Dayjs } from "dayjs";
-import type { TPaginated } from "./api";
-import type { TAttendanceRecord } from "./attendance";
+import type { TPaginated } from "@/types/api";
+import type { TAttendanceRecord } from "@/types/attendance";
 
 type TEmployee = {
   id: number;

@@ -6,7 +6,7 @@ import type {
   TEmployeeList,
   TEmployeeListParams,
   TUpdateEmployeeInput,
-} from "@/types/employee";
+} from "./types";
 import { endOfDayIso, startOfDayIso } from "@/utils/date";
 import { http } from "@/utils/http";
 import { toQueryString } from "@/utils/query-string";

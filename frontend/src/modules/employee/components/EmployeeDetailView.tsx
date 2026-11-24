@@ -20,11 +20,10 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { EmployeeNotFound } from "@/components/EmployeeNotFound";
 import { QueryErrorAlert } from "@/components/QueryErrorAlert";
-import { useEmployee, useEmployeeAttendances } from "@/hooks/employees";
+import { useEmployee, useEmployeeAttendances } from "../hooks";
 import type { TAttendanceRecord } from "@/types/attendance";
-import type { TAttendanceFilterQuery, TEmployeeDetailViewProps } from "@/types/employee";
+import type { TAttendanceFilterQuery, TEmployeeDetailViewProps } from "../types";
 import {
   DATE_PARAM_FORMAT,
   formatDate,
@@ -34,7 +33,8 @@ import {
   isDateParam,
 } from "@/utils/date";
 import { HttpError } from "@/utils/http";
-import { EmployeeFormModal } from "../../EmployeeFormModal";
+import { EmployeeFormModal } from "./EmployeeFormModal";
+import { EmployeeNotFound } from "./EmployeeNotFound";
 
 const PAGE_SIZE = 10;
 

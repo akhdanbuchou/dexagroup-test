@@ -3,8 +3,8 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Alert, Button, Form, Input } from "antd";
 import { startTransition, useActionState } from "react";
-import { login } from "@/actions/auth";
-import type { TLoginInput } from "@/types/auth";
+import { login } from "../actions";
+import type { TLoginInput } from "../types";
 
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(login, {});

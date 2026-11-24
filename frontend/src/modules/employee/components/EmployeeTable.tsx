@@ -18,8 +18,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { PageHeader } from "@/components/PageHeader";
 import { QueryErrorAlert } from "@/components/QueryErrorAlert";
-import { useEmployees } from "@/hooks/employees";
-import type { TEmployee, TEmployeeListQuery, TEmployeeModalState } from "@/types/employee";
+import { useEmployees } from "../hooks";
+import type { TEmployee, TEmployeeListQuery, TEmployeeModalState } from "../types";
 import { formatDateOnly } from "@/utils/date";
 import { EmployeeFormModal } from "./EmployeeFormModal";
 
