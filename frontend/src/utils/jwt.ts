@@ -13,9 +13,7 @@ function secretKey(): Uint8Array {
   return new TextEncoder().encode(secret);
 }
 
-export async function verifySessionToken(
-  token: string | undefined,
-): Promise<TSessionUser | null> {
+export async function verifySessionToken(token: string | undefined): Promise<TSessionUser | null> {
   if (!token) {
     return null;
   }
@@ -30,8 +28,7 @@ export async function verifySessionToken(
       userId: payload.sub,
       username: String(payload.username),
       role: payload.role,
-      employeeId:
-        typeof payload.employeeId === "number" ? payload.employeeId : null,
+      employeeId: typeof payload.employeeId === "number" ? payload.employeeId : null,
       name: String(payload.name),
     };
   } catch {

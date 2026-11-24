@@ -22,24 +22,14 @@ export function LoginForm() {
       disabled={pending}
     >
       {state.error && (
-        <Alert
-          type="error"
-          title={state.error}
-          showIcon
-          style={{ marginBottom: 16 }}
-        />
+        <Alert type="error" title={state.error} showIcon style={{ marginBottom: 16 }} />
       )}
       <Form.Item
         label="Username"
         name="username"
         rules={[{ required: true, message: "Please enter your username" }]}
       >
-        <Input
-          prefix={<UserOutlined />}
-          placeholder="Username"
-          autoComplete="username"
-          autoFocus
-        />
+        <Input prefix={<UserOutlined />} placeholder="Username" autoComplete="username" autoFocus />
       </Form.Item>
       <Form.Item
         label="Password"

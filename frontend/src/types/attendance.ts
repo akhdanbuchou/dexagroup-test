@@ -7,8 +7,14 @@ type TAttendanceRow = {
   time: string;
 };
 
+type TAttendanceRecord = {
+  id: number;
+  type: TAttendanceType;
+  recordedAt: string;
+};
+
 type TClockPanelProps = {
   name: string;
 };
 
-export type { TAttendanceType, TAttendanceRow, TClockPanelProps };
+export type { TAttendanceType, TAttendanceRow, TAttendanceRecord, TClockPanelProps };

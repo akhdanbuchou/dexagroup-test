@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { App, ConfigProvider } from "antd";
+import { QueryProvider } from "@/components/QueryProvider";
 import { theme } from "@/utils/theme";
 import "./globals.css";
 
@@ -22,14 +23,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <AntdRegistry>
           <ConfigProvider theme={theme}>
-            <App className="flex flex-1 flex-col">{children}</App>
+            <App className="flex flex-1 flex-col">
+              <QueryProvider>{children}</QueryProvider>
+            </App>
           </ConfigProvider>
         </AntdRegistry>
       </body>
