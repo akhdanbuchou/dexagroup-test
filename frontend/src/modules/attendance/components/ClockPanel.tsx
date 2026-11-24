@@ -1,7 +1,7 @@
 "use client";
 
 import { LoginOutlined, LogoutOutlined } from "@ant-design/icons";
-import { App, Button, Card, Col, Flex, Row, Tooltip, Typography } from "antd";
+import { Alert, App, Button, Card, Col, Flex, Row, Tooltip, Typography } from "antd";
 import dayjs from "dayjs";
 import { useState } from "react";
 import type { TAttendanceType } from "@/types/attendance";
@@ -9,12 +9,36 @@ import { APP_TIMEZONE, formatTime } from "@/utils/date";
 import { errorMessage } from "@/utils/http";
 import { BRAND } from "@/utils/theme";
 import { useCamera, useNow, useRecordAttendance, useTodayAttendances } from "../hooks";
-import type { TClockPanelProps, TPendingClock } from "../types";
+import type {
+  TClockAvailability,
+  TClockPanelProps,
+  TPendingClock,
+  TTodayClockState,
+} from "../types";
 import { CameraPreview } from "./CameraPreview";
 import { ClockConfirmModal } from "./ClockConfirmModal";
 import { TodayActivity } from "./TodayActivity";
 
 const TYPE_LABEL = { CLOCK_IN: "Clock In", CLOCK_OUT: "Clock Out" };
+
+function clockAvailability(type: TAttendanceType, state: TTodayClockState): TClockAvailability {
+  if (!state.cameraReady) {
+    return { allowed: false, reason: "Turn on your camera to clock in or out" };
+  }
+  if (state.loading) {
+    return { allowed: false, reason: "Checking today's attendance…" };
+  }
+  if (type === "CLOCK_IN" && state.hasClockedIn) {
+    return { allowed: false, reason: "You've already clocked in today" };
+  }
+  if (type === "CLOCK_OUT" && !state.hasClockedIn) {
+    return { allowed: false, reason: "Clock in first before you clock out" };
+  }
+  if (type === "CLOCK_OUT" && state.hasClockedOut) {
+    return { allowed: false, reason: "You've already clocked out today" };
+  }
+  return { allowed: true, reason: null };
+}
 
 function greeting(hour: number): string {
   if (hour < 12) return "Good morning";
@@ -35,8 +59,14 @@ export function ClockPanel({ name }: TClockPanelProps) {
   const firstName = name.split(" ")[0];
   const local = now ? dayjs(now).tz(APP_TIMEZONE) : null;
   const records = today.data?.data ?? [];
-  const suggested: TAttendanceType = records[0]?.type === "CLOCK_IN" ? "CLOCK_OUT" : "CLOCK_IN";
-  const cameraReady = camera.status === "ready";
+  const clockState: TTodayClockState = {
+    loading: today.isPending,
+    hasClockedIn: records.some((record) => record.type === "CLOCK_IN"),
+    hasClockedOut: records.some((record) => record.type === "CLOCK_OUT"),
+    cameraReady: camera.status === "ready",
+  };
+  const suggested: TAttendanceType = clockState.hasClockedIn ? "CLOCK_OUT" : "CLOCK_IN";
+  const doneForToday = clockState.hasClockedIn && clockState.hasClockedOut;
 
   const startClock = async (type: TAttendanceType) => {
     setCapturing(true);
@@ -72,23 +102,24 @@ export function ClockPanel({ name }: TClockPanelProps) {
   };
 
   const clockButton = (type: TAttendanceType) => {
+    const availability = clockAvailability(type, clockState);
     const button = (
       <Button
         type={type === suggested ? "primary" : "default"}
         size="large"
         icon={type === "CLOCK_IN" ? <LoginOutlined /> : <LogoutOutlined />}
         block
-        disabled={!cameraReady || recordMutation.isPending}
+        disabled={!availability.allowed || recordMutation.isPending}
         loading={capturing && pending === null}
         onClick={() => startClock(type)}
       >
         {TYPE_LABEL[type]}
       </Button>
     );
-    return cameraReady ? (
+    return availability.allowed ? (
       button
     ) : (
-      <Tooltip title="Turn on your camera to clock in or out">
+      <Tooltip title={availability.reason}>
         <span style={{ flex: 1 }}>{button}</span>
       </Tooltip>
     );
@@ -142,6 +173,15 @@ export function ClockPanel({ name }: TClockPanelProps) {
                 {clockButton("CLOCK_IN")}
                 {clockButton("CLOCK_OUT")}
               </Flex>
+              {doneForToday && (
+                <Alert
+                  type="success"
+                  showIcon
+                  title="You're done for today"
+                  description="Your clock-in and clock-out are recorded. See you tomorrow!"
+                  style={{ marginTop: 16 }}
+                />
+              )}
             </Card>
 
             <TodayActivity

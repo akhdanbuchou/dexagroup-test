@@ -1,11 +1,13 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import type { AttendanceType } from '../generated/prisma/enums.js';
+import { AttendanceType } from '../generated/prisma/enums.js';
 import { Prisma } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { workDateFor } from '../common/date.util.js';
 import type { TPaginated } from '../common/pagination.types.js';
 import { detectImageMimeType } from '../common/photo.util.js';
 import { ListAttendancesQueryDto } from './dto/list-attendances-query.dto.js';
@@ -42,17 +44,46 @@ export class AttendancesService {
       throw new BadRequestException('photo must be a JPEG, PNG or WebP image');
     }
 
-    const row = await this.prisma.attendance.create({
-      data: {
-        employeeId,
-        type,
-        recordedAt: new Date(),
-        photo: new Uint8Array(photo.buffer),
-        photoMimeType: mimeType,
-      },
-      select: summarySelect,
-    });
-    return this.toSummary(row);
+    const recordedAt = new Date();
+    const workDate = workDateFor(recordedAt);
+
+    if (type === AttendanceType.CLOCK_OUT) {
+      const clockedIn = await this.prisma.attendance.count({
+        where: { employeeId, workDate, type: AttendanceType.CLOCK_IN },
+      });
+      if (clockedIn === 0) {
+        throw new ConflictException(
+          'You need to clock in today before you can clock out',
+        );
+      }
+    }
+
+    try {
+      const row = await this.prisma.attendance.create({
+        data: {
+          employeeId,
+          type,
+          recordedAt,
+          workDate,
+          photo: new Uint8Array(photo.buffer),
+          photoMimeType: mimeType,
+        },
+        select: summarySelect,
+      });
+      return this.toSummary(row);
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException(
+          type === AttendanceType.CLOCK_IN
+            ? 'You have already clocked in today'
+            : 'You have already clocked out today',
+        );
+      }
+      throw error;
+    }
   }
 
   async listForEmployee(

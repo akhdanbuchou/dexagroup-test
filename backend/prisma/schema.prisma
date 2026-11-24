@@ -51,10 +51,12 @@ model Attendance {
   employee      Employee       @relation(fields: [employeeId], references: [id], onDelete: Restrict)
   type          AttendanceType
   recordedAt    DateTime       @map("recorded_at")
+  workDate      DateTime       @map("work_date") @db.Date
   photo         Bytes
   photoMimeType String         @map("photo_mime_type")
   createdAt     DateTime       @default(now()) @map("created_at")
 
+  @@unique([employeeId, workDate, type])
   @@index([employeeId, recordedAt])
   @@map("attendances")
 }

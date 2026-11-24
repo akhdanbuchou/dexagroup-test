@@ -85,6 +85,7 @@ async function seedSampleAttendance(
         employeeId,
         type: AttendanceType.CLOCK_IN,
         recordedAt: clockIn,
+        workDate: day,
         photo: placeholderPhoto(
           `${name} · Clock In`,
           `${dayLabel} 08:${String(inMinute).padStart(2, '0')} WIB`,
@@ -96,6 +97,7 @@ async function seedSampleAttendance(
         employeeId,
         type: AttendanceType.CLOCK_OUT,
         recordedAt: clockOut,
+        workDate: day,
         photo: placeholderPhoto(
           `${name} · Clock Out`,
           `${dayLabel} 17:${String(outMinute).padStart(2, '0')} WIB`,

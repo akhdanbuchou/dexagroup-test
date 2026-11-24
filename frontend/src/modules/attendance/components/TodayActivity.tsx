@@ -7,8 +7,8 @@ import { formatTime } from "@/utils/date";
 
 export function TodayActivity({ records, loading, error, onRetry }: TTodayActivityProps) {
   const chronological = [...records].reverse();
-  const firstIn = chronological.find((record) => record.type === "CLOCK_IN");
-  const lastOut = [...chronological].reverse().find((record) => record.type === "CLOCK_OUT");
+  const clockIn = records.find((record) => record.type === "CLOCK_IN");
+  const clockOut = records.find((record) => record.type === "CLOCK_OUT");
 
   return (
     <Card title="Today">
@@ -22,15 +22,15 @@ export function TodayActivity({ records, loading, error, onRetry }: TTodayActivi
         <Flex vertical gap={16}>
           <Flex gap={24}>
             <Flex vertical>
-              <Typography.Text type="secondary">First clock-in</Typography.Text>
+              <Typography.Text type="secondary">Clock in</Typography.Text>
               <Typography.Text strong style={{ fontSize: 18 }}>
-                {firstIn ? formatTime(firstIn.recordedAt) : "—"}
+                {clockIn ? formatTime(clockIn.recordedAt) : "—"}
               </Typography.Text>
             </Flex>
             <Flex vertical>
-              <Typography.Text type="secondary">Last clock-out</Typography.Text>
+              <Typography.Text type="secondary">Clock out</Typography.Text>
               <Typography.Text strong style={{ fontSize: 18 }}>
-                {lastOut ? formatTime(lastOut.recordedAt) : "—"}
+                {clockOut ? formatTime(clockOut.recordedAt) : "—"}
               </Typography.Text>
             </Flex>
           </Flex>

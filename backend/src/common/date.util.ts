@@ -1,3 +1,12 @@
+const APP_TIMEZONE = 'Asia/Jakarta';
+
+const appDateFormatter = new Intl.DateTimeFormat('en-CA', {
+  timeZone: APP_TIMEZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+
 function toDateOnly(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
@@ -14,4 +23,8 @@ function calculateAge(dateOfBirth: Date, today: Date = new Date()): number {
   return age;
 }
 
-export { toDateOnly, calculateAge };
+function workDateFor(instant: Date): Date {
+  return new Date(`${appDateFormatter.format(instant)}T00:00:00.000Z`);
+}
+
+export { APP_TIMEZONE, toDateOnly, calculateAge, workDateFor };

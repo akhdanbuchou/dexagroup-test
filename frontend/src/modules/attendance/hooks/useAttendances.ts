@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { TAttendanceListParams } from "@/types/attendance";
 import { todayDateParam } from "@/utils/date";
+import { HttpError } from "@/utils/http";
 import { fetchMyAttendances, recordAttendance } from "../client";
 
 const TODAY_PAGE_SIZE = 50;
@@ -34,6 +35,11 @@ function useRecordAttendance() {
   return useMutation({
     mutationFn: recordAttendance,
     onSuccess: () => queryClient.invalidateQueries({ queryKey: attendanceKeys.mine() }),
+    onError: (error) => {
+      if (error instanceof HttpError && error.status === 409) {
+        return queryClient.invalidateQueries({ queryKey: attendanceKeys.mine() });
+      }
+    },
   });
 }
 

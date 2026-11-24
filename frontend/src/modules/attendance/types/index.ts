@@ -18,6 +18,18 @@ type TRecordAttendanceInput = {
   photo: Blob;
 };
 
+type TTodayClockState = {
+  loading: boolean;
+  hasClockedIn: boolean;
+  hasClockedOut: boolean;
+  cameraReady: boolean;
+};
+
+type TClockAvailability = {
+  allowed: boolean;
+  reason: string | null;
+};
+
 type TClockPanelProps = {
   name: string;
 };
@@ -48,6 +60,8 @@ export type {
   TCapturedPhoto,
   TPendingClock,
   TRecordAttendanceInput,
+  TTodayClockState,
+  TClockAvailability,
   TClockPanelProps,
   TCameraPreviewProps,
   TClockConfirmModalProps,
